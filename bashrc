@@ -64,6 +64,7 @@ if [ -f ~/.bash_aliases ]; then
 fi
 alias emacs="emacs -g 200x100"
 alias g="git"
+alias e="emacs"
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
