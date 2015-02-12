@@ -26,6 +26,9 @@
 (require 'evil)
 (evil-mode 1)
 
+(require 'autopair)
+(autopair-global-mode)
+
 (require 'column-marker)
 (add-hook 'python-mode-hook (lambda () (interactive) (column-marker-1 79)))
 (add-hook 'after-init-hook #'global-flycheck-mode)
@@ -39,6 +42,9 @@
 
 (require 'web-mode)
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+
+(add-hook 'js-mode-hook
+          (lambda () (flycheck-mode t)))
 
 (provide '.emacs)
 ;;; .emacs ends here
