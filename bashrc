@@ -77,6 +77,8 @@ if ! shopt -oq posix; then
   fi
 fi
 
+# git completion on alias g
+__git_complete g __git_main
 
 
 export VISUAL="emacs"
