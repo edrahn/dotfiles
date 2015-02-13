@@ -31,9 +31,16 @@
 
 (require 'column-marker)
 (add-hook 'python-mode-hook (lambda () (interactive) (column-marker-1 79)))
-(add-hook 'after-init-hook #'global-flycheck-mode)
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
+(autoload 'flyspell-mode "flyspell" "On-the-fly spelling checker." t)
+(add-hook 'message-mode-hook 'turn-on-flyspell)
+(add-hook 'text-mode-hook 'turn-on-flyspell)
+(add-hook 'python-mode-hook 'flyspell-prog-mode)
+(defun turn-on-flyspell ()
+   "Force flyspell-mode on using a positive arg.  For use in hooks."
+   (interactive)
+   (flyspell-mode 1))
 
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
 (show-paren-mode)
 (column-number-mode)
 (windmove-default-keybindings)
@@ -74,6 +81,7 @@
 (require 'projectile)
 (projectile-global-mode)
 
+(byte-recompile-directory "~/.emacs.d" 0 0)
 
 (provide '.emacs)
 ;;; .emacs ends here
