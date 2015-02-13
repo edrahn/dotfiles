@@ -2,7 +2,7 @@
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
                          ("org" . "http://orgmode.org/elpa/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")
-                         ("melpa-stable" . "http://melpa-stable.milkbox.net/packages/")))
+			 ("melpa" . "http://melpa.org/packages/")))
 (package-initialize)
 
 (defun require-package (package)
@@ -81,7 +81,14 @@
 (require 'projectile)
 (projectile-global-mode)
 
-(byte-recompile-directory "~/.emacs.d" 0 0)
+(byte-recompile-directory "~/.emacs.d" 0)
+
+(global-set-key (kbd "M-j")
+	(lambda ()
+                  (interactive)
+                  (join-line -1)))
+
+(autoload 'jedi:setup "jedi" nil t)
 
 (provide '.emacs)
 ;;; .emacs ends here
