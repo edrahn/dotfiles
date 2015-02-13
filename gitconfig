@@ -12,3 +12,4 @@
 	st = stash
 	me = merge
 	a = add
+	d = diff
