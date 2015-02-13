@@ -77,7 +77,7 @@ if ! shopt -oq posix; then
   fi
 fi
 
-
+__git_complete g __git_main
 
 export VISUAL="emacs"
 export EDITOR="emacs"
