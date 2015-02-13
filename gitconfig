@@ -1,0 +1,14 @@
+[user]
+	email = edsrahn@gmail.com
+	name = Ed Rahn
+[push]
+	defaults = simple
+	default = simple
+[alias]
+	co = checkout
+	b = branch
+	ci = commit
+	s = status
+	st = stash
+	me = merge
+	a = add

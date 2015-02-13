@@ -80,7 +80,6 @@ fi
 # git completion on alias g
 __git_complete g __git_main
 
-
 export VISUAL="emacs"
 export EDITOR="emacs"
 export PYTHONPATH="$PYTHONPATH:/home/ed/projects/equalog/"
