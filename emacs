@@ -1,4 +1,4 @@
-;;; package --- Summary
+
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
                          ("org" . "http://orgmode.org/elpa/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")
@@ -87,8 +87,6 @@
 	(lambda ()
                   (interactive)
                   (join-line -1)))
-
-(autoload 'jedi:setup "jedi" nil t)
 
 (provide '.emacs)
 ;;; .emacs ends here

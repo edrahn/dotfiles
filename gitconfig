@@ -10,6 +10,9 @@
 	ci = commit
 	s = status
 	st = stash
-	me = merge
+	m = merge
 	a = add
 	d = diff
+	l = log
+[merge]
+	ff = no
