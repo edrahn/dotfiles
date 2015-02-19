@@ -76,6 +76,7 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+source /etc/bash_completion.d/git
 
 # git completion on alias g
 __git_complete g __git_main
