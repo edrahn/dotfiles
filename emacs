@@ -13,46 +13,30 @@
       (package-refresh-contents))
     (package-install package)))
 
-
-(package-initialize)
-(elpy-enable)
-
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 (add-to-list 'load-path "~/.emacs.d/")
 
-(load-theme 'zenburn t)
+;;; emacs core settings
 (setq inhibit-startup-message t)
-
-(require 'evil)
-(evil-mode 1)
-
-(require 'autopair)
-(autopair-global-mode)
-
-(require 'column-marker)
-(add-hook 'python-mode-hook (lambda () (interactive) (column-marker-1 79)))
-(autoload 'flyspell-mode "flyspell" "On-the-fly spelling checker." t)
-(add-hook 'message-mode-hook 'turn-on-flyspell)
-(add-hook 'text-mode-hook 'turn-on-flyspell)
-(add-hook 'python-mode-hook 'flyspell-prog-mode)
-(defun turn-on-flyspell ()
-   "Force flyspell-mode on using a positive arg.  For use in hooks."
-   (interactive)
-   (flyspell-mode 1))
-
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
-(show-paren-mode)
-(column-number-mode)
-(windmove-default-keybindings)
 (tool-bar-mode -1)
 (menu-bar-mode -1)
+(column-number-mode)
+(windmove-default-keybindings)
+
+;;; Theme
+(load-theme 'zenburn t)
+
+;;; Packages and their settings
+(require 'evil)
+(evil-mode 1)
 
 (require 'web-mode)
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 
-(add-hook 'js-mode-hook
-          (lambda () (flycheck-mode t)))
-(setq flycheck-highlighting-mode 'lines)
+(require 'autopair)
+(autopair-global-mode)
+
+(elpy-enable)
 
 (require 'helm)
 (require 'helm-config)
@@ -68,7 +52,7 @@
 (define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
 
 (when (executable-find "curl")
-  (setq helm-google-suggest-use-curl-p t))
+      (setq helm-google-suggest-use-curl-p t))
 
 (setq helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
       helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
@@ -81,12 +65,65 @@
 (require 'projectile)
 (projectile-global-mode)
 
-(byte-recompile-directory "~/.emacs.d" 0)
+(autoload 'jedi:setup "jedi" nil t)
+(add-hook 'python-mode-hook 'jedi:setup)
+(setq jedi:complete-on-dot t)
 
+(require 'column-marker)
+(add-hook 'python-mode-hook (lambda () (interactive) (column-marker-1 79)))
+
+;;; Coding and code cleanup
+(electric-indent-mode 1)
+;;; Indentation for python
+
+;; Ignoring electric indentation
+(defun electric-indent-ignore-python (char)
+  "Ignore electric indentation for python-mode"
+  (if (equal major-mode 'python-mode)
+      `no-indent'
+    nil))
+(add-hook 'electric-indent-functions 'electric-indent-ignore-python)
+
+;; Enter key executes newline-and-indent
+(defun set-newline-and-indent ()
+  "Map the return key with `newline-and-indent'"
+  (local-set-key (kbd "RET") 'newline-and-indent))
+(add-hook 'python-mode-hook 'set-newline-and-indent)
+
+(show-paren-mode)
+(setq-default tab-width 4)
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
 (global-set-key (kbd "M-j")
 	(lambda ()
-                  (interactive)
-                  (join-line -1)))
+		(interactive)
+		(join-line -1)))
+
+;;; (require 'js2-mode)
+;;; (add-hook 'js-mode-hook 'js2-minor-mode)
+;;; (add-hook 'js2-mode-hook 'ac-js2-mode)
+;;; (setq js2-highlight-level 3)
+;;; (define-key js-mode-map "{" 'paredit-open-curly)
+;;; (define-key js-mode-map "}" 'paredit-close-curly-and-newline)
+
+
+(byte-recompile-directory "~/.emacs.d" 0)
+
+
+
+
+;;; (autoload 'flyspell-mode "flyspell" "On-the-fly spelling checker." t)
+;;; (add-hook 'message-mode-hook 'turn-on-flyspell)
+;;; (add-hook 'text-mode-hook 'turn-on-flyspell)
+;;; (add-hook 'python-mode-hook 'flyspell-prog-mode)
+;;; (defun turn-on-flyspell ()
+;;;   "Force flyspell-mode on using a positive arg.  For use in hooks."
+;;;   (interactive)
+;;;   (flyspell-mode 1))
+;;; (add-hook 'js-mode-hook
+;;; (lambda () (flycheck-mode t)))
+;;; (setq flycheck-highlighting-mode 'lines)
+
+
 
 (provide '.emacs)
 ;;; .emacs ends here
